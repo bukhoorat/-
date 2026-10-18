@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>ZAREN — Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="public/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <div class="admin-wrap">
+    <!-- LOGIN -->
+    <div id="loginScreen" class="login-screen">
+      <div class="login-card">
+        <div class="login-logo">ZAREN</div>
+        <p class="login-sub" data-i18n="admin_login_sub"></p>
+        <form id="loginForm">
+          <input type="password" id="adminPass" placeholder="Password" required autocomplete="current-password" />
+          <button type="submit" class="btn btn-gold" data-i18n="admin_login_btn"></button>
+        </form>
+        <p id="loginError" class="login-error" hidden></p>
+        <p class="login-note" data-i18n="admin_login_note"></p>
+        <a href="index.html" class="login-back" data-i18n="admin_back"></a>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="dashboard" hidden>
+      <aside class="sidebar">
+        <div class="sidebar-logo">ZAREN</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-tab="products" data-i18n="admin_tab_products"></button>
+          <button class="nav-item" data-tab="content" data-i18n="admin_tab_content"></button>
+          <button class="nav-item" data-tab="settings" data-i18n="admin_tab_settings"></button>
+        </nav>
+        <a href="index.html" class="sidebar-view" data-i18n="admin_view_site"></a>
+        <button id="logoutBtn" class="sidebar-logout" data-i18n="admin_logout"></button>
+      </aside>
+
+      <main class="admin-main">
+        <!-- PRODUCTS TAB -->
+        <section id="tab-products" class="tab-content active">
+          <div class="tab-head">
+            <h1 data-i18n="admin_products_title"></h1>
+            <button id="addProductBtn" class="btn btn-gold btn-sm" data-i18n="admin_add_product"></button>
+          </div>
+          <div id="productsAdminList" class="admin-list"></div>
+        </section>
+
+        <!-- CONTENT TAB -->
+        <section id="tab-content" class="tab-content">
+          <div class="tab-head">
+            <h1 data-i18n="admin_content_title"></h1>
+          </div>
+          <div class="content-form">
+            <div class="form-group">
+              <label data-i18n="admin_content_hero_tagline"></label>
+              <input type="text" id="contentHeroTaglineFa" placeholder="فارسی" />
+              <input type="text" id="contentHeroTaglineEn" placeholder="English" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="admin_content_story"></label>
+              <textarea id="contentStoryFa" rows="3" placeholder="فارسی"></textarea>
+              <textarea id="contentStoryEn" rows="3" placeholder="English"></textarea>
+            </div>
+            <button id="saveContentBtn" class="btn btn-gold btn-sm" data-i18n="admin_save"></button>
+          </div>
+        </section>
+
+        <!-- SETTINGS TAB -->
+        <section id="tab-settings" class="tab-content">
+          <div class="tab-head">
+            <h1 data-i18n="admin_settings_title"></h1>
+          </div>
+          <div class="content-form">
+            <div class="form-group">
+              <label data-i18n="admin_settings_whatsapp"></label>
+              <input type="text" id="settingsWhatsapp" value="09305459758" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="admin_settings_instagram"></label>
+              <input type="text" id="settingsInstagram" value="zaren__perfume" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="admin_settings_tagline"></label>
+              <input type="text" id="settingsTagline" value="BE REMEMBERED." />
+            </div>
+            <button id="saveSettingsBtn" class="btn btn-gold btn-sm" data-i18n="admin_save"></button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- PRODUCT EDIT MODAL -->
+  <div id="productEditModal" class="modal-overlay" hidden>
+    <div class="edit-modal">
+      <div class="edit-modal-head">
+        <h2 id="editModalTitle"></h2>
+        <button id="closeEditModal" class="modal-close-btn">✕</button>
+      </div>
+      <form id="productForm" class="edit-form">
+        <input type="hidden" id="editProductId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name (EN)</label>
+            <input type="text" id="editName" required />
+          </div>
+          <div class="form-group">
+            <label>نام (FA)</label>
+            <input type="text" id="editNameFa" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tagline (EN)</label>
+            <input type="text" id="editTagline" />
+          </div>
+          <div class="form-group">
+            <label>تگ‌لاین (FA)</label>
+            <input type="text" id="editTaglineFa" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Description (EN)</label>
+            <textarea id="editDesc" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>توضیحات (FA)</label>
+            <textarea id="editDescFa" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price (FA, Toman)</label>
+            <input type="text" id="editPrice" />
+          </div>
+          <div class="form-group">
+            <label>Price (EN, USD)</label>
+            <input type="text" id="editPriceEn" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Volume</label>
+            <input type="text" id="editVolume" value="50ml" />
+          </div>
+          <div class="form-group">
+            <label>Bottle Color (CSS gradient)</label>
+            <input type="text" id="editColor" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-gold btn-sm" data-i18n="admin_save"></button>
+          <button type="button" id="deleteProductBtn" class="btn btn-danger btn-sm" data-i18n="admin_delete"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- LIMITATION NOTICE -->
+  <div id="limitNotice" class="limit-notice" hidden>
+    <div class="limit-card">
+      <h3 data-i18n="admin_limit_title"></h3>
+      <p data-i18n="admin_limit_body"></p>
+      <button id="dismissLimit" class="btn btn-ghost btn-sm" data-i18n="admin_limit_dismiss"></button>
+    </div>
+  </div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
